@@ -1,0 +1,55 @@
+body{
+    /*width: 100%;*/
+    /*height: 100%;*/
+    background-color: #2A2A2A;
+    position: relative;
+    margin: 100px;
+}
+
+#panel{
+    width: 684px;
+    height: 576px;
+    background-color: #db7a7a;
+    position: relative;
+    float: right;
+    right: 20px;
+}
+
+
+
+#wall{
+    width: 36px;
+    height: 36px;
+   background-color: rgb(13, 13, 14);
+    position: relative;
+    display: inline-block;
+
+}
+#block{
+    width: 36px;
+    height: 36px;
+    background-color: rgb(36, 122, 72);
+    position: relative;
+    display: inline-block;
+}
+#player{
+    width: 36px;
+    height: 36px;
+    background-color: crimson;
+    position: relative;
+    display: inline-block;
+}
+#goal{
+    width: 36px;
+    height: 36px;
+    background-color: rgb(33, 51, 204);
+    position: relative;
+    display: inline-block;
+}
+#space{
+    width: 36px;
+    height: 36px;
+    position: relative;
+    display: inline-block;
+    background-color: azure;
+}
