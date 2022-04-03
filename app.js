@@ -50,6 +50,7 @@ var tileMap01 = {
 
 
 var map01 = tileMap01.mapGrid;
+
  CreatMap();
 
 
@@ -59,30 +60,27 @@ function CreatMap(){
      
     for (var j = 0; j < tileMap01.width; j++){
           
-        switch (map01[i][j].toString()){
+        switch (map01[i][j][0]){
 
-              case "W":  SetId("wall");
+              case "W":  SetClass("wall");
                           break;
-              case "B":  SetId("block");
+              case "B":  SetClass("block");
                           break;
-              case "P":  SetId("player");
+              case "P":  SetClass("player");
                           break;
-              case "G":  SetId("goal");
-              
+              case "G":  SetClass("goal");
                           break;
-              case " ":  SetId("space");
-                          break;
-              
+              case " ":  SetClass("space");
           }
       }
   }
 }
 
 
-function SetId(idName){
+function SetClass(ClassName){
   var nodeText, attribute;
-  attribute = document.createAttribute("id");
-  attribute.value = idName;
+  attribute = document.createAttribute("class");
+  attribute.value = ClassName;
 
   nodeText = document.createElement("span");
   
@@ -90,4 +88,98 @@ function SetId(idName){
 
   document.getElementById("panel").appendChild(nodeText);
 }
+
+function updateMap(){
+  document.getElementById("panel").innerHTML = "";
+  for (var i = 0; i <tileMap01.height; i++){
+      for (var j = 0; j < tileMap01.width; j++){
+          switch (map01[i][j][0]){
+              case "W":  SetClass("wall");
+                  break;
+              case "B":  SetClass("block");
+                  break;
+              case "P":  SetClass("player");
+                  break;
+              case "G":  SetClass("goal");
+                  break;
+              case " ":  SetClass("space");
+          }
+      }
+  }
+}
+
+
+
+var playerPosx=11;
+var playerPosy= 11;
+var  playerNextPosx, playerNextPosy;
+
+
+function EmptyPos(){
+
+  map01[playerPosx][playerPosy] = new Array(' ');
+}
+
+
+
+function moveDown(){
+  playerNextPosx = playerPosx +1;
+  playerNextPosy = playerPosy;
+  
+
+  if (map01[playerNextPosx][playerNextPosy][0] === " "){
+    map01[playerNextPosx][playerNextPosy] = new Array('P');
+    EmptyPos();
+
+      playerPosx = playerNextPosx;
+      playerPosy = playerNextPosy;
+      updateMap();
+  }
+}
+
+function moveUp(){
+  playerNextPosx = playerPosx - 1;
+  playerNextPosy = playerPosy;
+
+  
+
+  if (map01[playerNextPosx][playerNextPosy][0] === " "){
+      map01[playerNextPosx][playerNextPosy] = new Array('P');
+      EmptyPos();
+      
+      playerPosx = playerNextPosx;
+      playerPosy = playerNextPosy;
+      updateMap();
+  }
+}
+
+function moveLeft(){
+  playerNextPosx = playerPosx ;
+  playerNextPosy = playerPosy - 1;
+
+  if (map01[playerNextPosx][playerNextPosy].toString() === " "){
+    map01[playerNextPosx][playerNextPosy] = new Array('P');
+    EmptyPos();
+      
+      playerPosx = playerNextPosx;
+      playerPosy = playerNextPosy;
+      updateMap();
+  }
+}
+
+function moveRight(){
+  playerNextPosx = playerPosx;
+  playerNextPosy = playerPosy + 1;
+
+  if (map01[playerNextPosx][playerNextPosy].toString() === " "){
+    map01[playerNextPosx][playerNextPosy] = new Array('P');
+    EmptyPos();
+
+    playerPosx = playerNextPosx;
+      playerPosy = playerNextPosy;
+      updateMap();
+  }
+}
+
+
 

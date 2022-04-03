@@ -17,36 +17,36 @@ body{
 
 
 
-#wall{
+.wall{
     width: 36px;
     height: 36px;
-   background-color: rgb(13, 13, 14);
+    background-image: url("wall.png");
     position: relative;
     display: inline-block;
 
 }
-#block{
+.block{
     width: 36px;
     height: 36px;
-    background-color: rgb(36, 122, 72);
+    background-image: url("box.png");
     position: relative;
     display: inline-block;
 }
-#player{
+.player{
     width: 36px;
     height: 36px;
-    background-color: crimson;
+    background-image: url("player.png");
     position: relative;
     display: inline-block;
 }
-#goal{
+.goal{
     width: 36px;
     height: 36px;
-    background-color: rgb(33, 51, 204);
+    background-image: url("heart_box.png");
     position: relative;
     display: inline-block;
 }
-#space{
+.space{
     width: 36px;
     height: 36px;
     position: relative;
