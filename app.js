@@ -1,4 +1,3 @@
-
 /*   This is the base file for the Sokoban assignment - include this one in your HTML page, before you add the main script file*/
 
 /*   Enum of CSS Classes for the static elements   */
@@ -49,10 +48,63 @@ var tileMap01 = {
 
 
 
+
+
+
+
+
+
 var map01 = tileMap01.mapGrid;
 
  CreatMap();
+ var event
 
+ /*function keyEventHandler(event){
+switch (event.key){
+  case key.left:
+   moveLeft();
+   break;
+   case key.right:
+   moveRight();
+   break;
+   case key.up:
+   moveUp();
+   break;
+   case key.down:
+   moveDown();
+   break;
+   default:
+     break;
+  }
+}*/
+
+
+ function startGame () {
+  window.addEventListener('keydown', function (a) {
+      switch (a.key) {
+          case 'ArrowUp':
+              a.preventDefault();
+              moveUp();
+              break;
+          case 'ArrowDown':
+              a.preventDefault();
+              moveDown();
+              break;
+          case 'ArrowLeft':
+              a.preventDefault();
+              moveLeft();
+              break;
+          case 'ArrowRight':
+              a.preventDefault();
+              moveRight();
+              break;
+          default:
+              break;
+      }
+  }, false);
+}
+
+startGame();
 
 function CreatMap(){
 
@@ -179,7 +231,4 @@ function moveRight(){
       playerPosy = playerNextPosy;
       updateMap();
   }
-}
-
-
-
+} 
