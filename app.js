@@ -55,28 +55,13 @@ var tileMap01 = {
 
 
 var map01 = tileMap01.mapGrid;
+var map = tileMap01.mapGrid;
+
+
 
  CreatMap();
  var event
 
- /*function keyEventHandler(event){
-switch (event.key){
-  case key.left:
-   moveLeft();
-   break;
-   case key.right:
-   moveRight();
-   break;
-   case key.up:
-   moveUp();
-   break;
-   case key.down:
-   moveDown();
-   break;
-   default:
-     break;
-  }
-}*/
 
 
  function startGame () {
@@ -123,6 +108,11 @@ function CreatMap(){
               case "G":  SetClass("goal");
                           break;
               case " ":  SetClass("space");
+              break;
+              case  " BG": SetClass("block");
+              break;
+              case "PG":  SetClass("player");
+
           }
       }
   }
@@ -155,6 +145,10 @@ function updateMap(){
               case "G":  SetClass("goal");
                   break;
               case " ":  SetClass("space");
+              break;
+              case  " BG": SetClass("block");
+              break;
+              case "PG":  SetClass("player");
           }
       }
   }
@@ -165,6 +159,8 @@ function updateMap(){
 var playerPosx=11;
 var playerPosy= 11;
 var  playerNextPosx, playerNextPosy;
+var goals;
+
 
 
 function EmptyPos(){
@@ -172,6 +168,45 @@ function EmptyPos(){
   map01[playerPosx][playerPosy] = new Array(' ');
 }
 
+// push the block!
+function pushBlock(boxNextRow, boxNextCol){
+  var nextBox = map[boxNextRow][boxNextCol][0];
+  //check if the box is remain
+  if(nextBox === " " ||nextBox === "G"){
+      
+      if (nextBox === "G"){
+          map[boxNextRow][boxNextCol] = new Array("BG");
+          
+      }else{
+          map[boxNextRow][boxNextCol] = new Array('B');
+      }
+
+      //push the box and move the player
+      if (nextBox === " " && nextBox === "BG"){
+          map[playerNextPosx][playerNextPosy] = new Array("PG");
+          map[playerPosx][playerPosy] = new Array('G');
+          goals++;
+      } else if (nextBox === " " && map[playerNextPosx][playerNextPosy][0] !== "BG" && map[playerPosx][playerPosy][0] === "PG"){
+          map[playerNextPosx][playerNextPosy] = new Array("P");
+          map[playerPosx][playerPosy] = new Array('G');
+          
+      } else if (nextBox === "G" && map[playerNextPosx][playerNextPosy][0] === "BG") {
+          map[playerNextPosx][playerNextPosy] = new Array("PG");
+          map[boxNextRow][boxNextCol] = new Array("BG");
+          if (map[playerPosx][playerPosy][0] === "P")
+              map[playerPosx][playerPosy] = new Array(' ');
+          else if(map[playerPosx][playerPosy][0] === "PG")
+              map[playerPosx][playerPosy] = new Array('G');
+          goals++;
+      } else{
+          map[playerNextPosx][playerNextPosy] = new Array('P');
+          map[playerPosx][playerPosy] = new Array(' ');
+      }
+
+      playerPosx = playerNextPosx;
+      playerPosy = playerNextPosy;
+  }
+}
 
 
 function moveDown(){
@@ -186,7 +221,13 @@ function moveDown(){
       playerPosx = playerNextPosx;
       playerPosy = playerNextPosy;
       updateMap();
-  }
+  }else if(map[playerNextPosx][playerNextPosy][0] === "B" || map[playerNextPosx][playerNextPosy][0] === "BG"){//block
+    var boxNextRow, boxNextCol;
+    boxNextRow = playerNextPosx +1;
+    boxNextCol = playerNextPosy;
+    pushBlock(boxNextRow, boxNextCol);
+    updateMap();
+}
 }
 
 function moveUp(){
@@ -202,7 +243,13 @@ function moveUp(){
       playerPosx = playerNextPosx;
       playerPosy = playerNextPosy;
       updateMap();
-  }
+  }else if(map[playerNextPosx][playerNextPosy][0] === "B" || map[playerNextPosx][playerNextPosy][0] === "BG"){//block
+    var boxNextRow, boxNextCol;
+    boxNextRow = playerNextPosx -1;
+    boxNextCol = playerNextPosy;
+    pushBlock(boxNextRow, boxNextCol);
+    updateMap();
+}
 }
 
 function moveLeft(){
@@ -216,7 +263,13 @@ function moveLeft(){
       playerPosx = playerNextPosx;
       playerPosy = playerNextPosy;
       updateMap();
-  }
+  }else if(map[playerNextPosx][playerNextPosy][0] === "B" || map[playerNextPosx][playerNextPosy][0] === "BG"){//block
+    var boxNextRow, boxNextCol;
+    boxNextRow = playerNextPosx ;
+    boxNextCol = playerNextPosy-1;
+    pushBlock(boxNextRow, boxNextCol);
+    updateMap();
+}
 }
 
 function moveRight(){
@@ -230,5 +283,11 @@ function moveRight(){
     playerPosx = playerNextPosx;
       playerPosy = playerNextPosy;
       updateMap();
-  }
+  }else if(map[playerNextPosx][playerNextPosy][0] === "B" || map[playerNextPosx][playerNextPosy][0] === "BG"){//block
+    var boxNextRow, boxNextCol;
+    boxNextRow = playerNextPosx ;
+    boxNextCol = playerNextPosy+1;
+    pushBlock(boxNextRow, boxNextCol);
+    updateMap();
+}
 } 
